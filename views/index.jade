@@ -1,0 +1,95 @@
+doctype html
+html(lang='vi', data-ng-app='FileManagerApp')
+  head
+    meta(charset='utf-8')
+    meta(name='robots', content='all,follow')
+    meta(name='googlebot', content='index,follow,snippet,archive')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title (っ◔◡◔)っ ♥ 03D.CNTT02 ♥ | Trang chủ
+    meta(name='keywords', content='ukb, cntt, 03d, bac ninh, upload file')
+
+    meta(property='og:title', content='(っ◔◡◔)っ ♥ 03D.CNTT02 ♥ | Trang chủ')
+    meta(property='og:site_name', content='(っ◔◡◔)っ ♥ 03D.CNTT02 ♥ | Trang chủ')
+    meta(property='og:description', content='Trang UPLOAD giáo trình của lớp 03D.CNTT02 UKB')
+    meta(property='og:type', content='website')
+    meta(property='og:url', content='http://cntt02.cf')
+    meta(property='og:image', content='')
+
+    //
+      *** THƯ VIỆN NGOÀI
+      ____________________________________________________________
+    script(src='bower_components/angular/angular.min.js')
+    script(src='bower_components/angular-translate/angular-translate.min.js')
+    script(src='bower_components/ng-file-upload/ng-file-upload.min.js')
+    script(src='bower_components/jquery/dist/jquery.min.js')
+    script(src='bower_components/bootstrap/dist/js/bootstrap.min.js')
+    link(rel='stylesheet', href='bower_components/bootswatch/paper/bootstrap.min.css')
+    //
+      *** END ***
+  body.ng-cloak
+    //
+      *** ANGULAR FILE MANAGER
+      _____________________________________________________________
+    angular-filemanager
+    //
+      *** END ***
+    //
+      *** MAIN JS & CSS
+      _____________________________________________________________
+    script(src='main/app.js')
+    script(src='main/directives/directives.js')
+    script(src='main/filters/filters.js')
+    script(src='main/providers/config.js')
+    script(src='main/entities/chmod.js')
+    script(src='main/entities/item.js')
+    script(src='main/services/apihandler.js')
+    script(src='main/services/apimiddleware.js')
+    script(src='main/services/filenavigator.js')
+    script(src='main/providers/translations.js')
+    script(src='main/controllers/main.js')
+    script(src='main/controllers/selector-controller.js')
+
+    link(href='main/css/angular-filemanager.min.css', rel='stylesheet')
+    //
+      *** END ***
+    //
+      *** TÙY CHỈNH ANGULAR FILE MANAGER
+      ______________________________________________________________
+    script(type='text/javascript').
+      angular.module('FileManagerApp').config(['fileManagerConfigProvider', function (config) {
+        var defaults = config.$get();
+        config.set({
+          appName: '03D.CNTT02',
+
+          listUrl: 'api/list',
+          uploadUrl: 'api/upload',
+          renameUrl: 'api/rename',
+          copyUrl: 'api/false',
+          moveUrl: 'api/false',
+          removeUrl: 'api/false',
+          editUrl: 'api/false',
+          getContentUrl: 'api/getContent',
+          createFolderUrl: 'api/createFolder',
+          downloadFileUrl: 'api/downloadFile',
+          downloadMultipleUrl: 'api/downloadMultiple',
+          compressUrl: 'api/compress',
+          extractUrl: 'api/extract',
+
+          allowedActions: angular.extend(defaults.allowedActions, {
+            pickFiles: false,
+            pickFolders: false,
+            remove: false,
+            edit: false,
+            move: false,
+            changePermissions: false,
+            copy: false
+          }),
+
+          tplPath: 'main/templates'
+        });
+      }]);
+    //
+      *** END ***
+    //
+      *** THANK https://github.com/joni2back/angular-filemanager  ***
+      ________________________________________________________________

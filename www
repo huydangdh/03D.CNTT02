@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+var koa =require('koa');
+var path = require('path');
+var tracer = require('tracer');
+var mount = require('koa-mount');
+var morgan = require('koa-morgan');
+var koaStatic = require('koa-static');
+var bodyParser = require('koa-bodyparser');
+
+global.Configs = {
+  data: {
+    root: "./uploads"
+  },
+  logger: require('tracer').console({level: 'info'}),
+  morganFormat: ':date[iso] :remote-addr :method :url :status :res[content-length] :response-time ms',
+  port : process.env.OPENSHIFT_NODEJS_PORT  || 8080,
+  ip:  process.env.OPENSHIFT_NODEJS_IP || "localhost"
+};
+
+// Start Server
+console.log(path.dirname('/uploads'));
+var startServer = function (app, port, ip) {
+  app.listen(port, ip);
+  Configs.logger.info('listening on ',ip,":",port);
+};
+
+var app = koa();
+app.proxy = true;
+app.use(morgan.middleware(Configs.morganFormat));
+app.use(bodyParser());
+
+var IndexRouter = require('./routes/index');
+var ApiRouter = require('./routes/api');
+
+app.use(mount('/', IndexRouter));
+app.use(mount('/api', ApiRouter));
+app.use(koaStatic(path.join(__dirname,'./public/')));
+
+startServer(app, Configs.port, Configs.ip);
