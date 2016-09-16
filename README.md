@@ -15,6 +15,7 @@
   - Đổi tên Thư mục/Tệp tin.
   - Tìm kiếm.
   - Hỗ trợ Mobile.
-### Cám ơn 
+
+#### Cám ơn 
   - Mã nguồn mở [joni2back](https://github.com/joni2back/angular-filemanager) angular-filemanager đã giúp tôi hoàn thiện front-end.    
 
