@@ -10,11 +10,13 @@ var bodyParser = require('koa-bodyparser');
 
 global.Configs = {
   data: {
-    root: "./uploads"
+    root: "./uploads",
+    backupPath: "./BACKUP",
+    trashPath: "/THÙNG RÁC"
   },
   logger: require('tracer').console({level: 'info'}),
   morganFormat: ':date[iso] :remote-addr :method :url :status :res[content-length] :response-time ms',
-  port : process.env.OPENSHIFT_NODEJS_PORT  || 8080,
+  port : process.env.OPENSHIFT_NODEJS_PORT  || 8000,
   ip:  process.env.OPENSHIFT_NODEJS_IP || "localhost"
 };
 
@@ -31,10 +33,13 @@ app.use(morgan.middleware(Configs.morganFormat));
 app.use(bodyParser());
 
 var IndexRouter = require('./routes/index');
-var ApiRouter = require('./routes/api');
+var MailRouter = require('./routes/api-mail');
+var DriveRouter = require('./routes/api-drive');
 
 app.use(mount('/', IndexRouter));
-app.use(mount('/api', ApiRouter));
+app.use(mount('/drive', DriveRouter));
+app.use(mount('/mail', MailRouter));
+
 app.use(koaStatic(path.join(__dirname,'./public/')));
 
 startServer(app, Configs.port, Configs.ip);

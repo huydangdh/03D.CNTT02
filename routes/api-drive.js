@@ -8,12 +8,20 @@ var fs = require('co-fs');
 var path = require('path');
 var views = require('co-views');
 var koaRouter = require('koa-router');
-var FileManager = require('../utils/FileManager');
 var router = new koaRouter();
+var FileManager = require('../utils/FileManager');
+var AdmZip = require('adm-zip');
+var zip = new AdmZip();
+var render = views(path.join(__dirname, "../views"), {map: {html: "jade"}});
+var mv = require('mv');
 
-router.get('/', function () {
-    this.status = 403;
-    this.body = "<h1 style='color: #d2322d;'>Cấm Truy Cập</h1>";
+router.get('/', function *() {
+    this.body = yield render("drive.jade");
+});
+
+router.get('/doBackup', function () {
+    zip.addLocalFolder(Configs.data.root);
+    zip.writeZip(path.join(Configs.data.backupPath,"BACKUP_UPLOADS_" + Date.now() + ".ZIP"));
 });
 
 router.get('/downloadFile', function () {
@@ -64,6 +72,12 @@ router.post('/rename', function *() {
 
 router.post('/upload', function *() {
     this.body = yield FileManager.create(this);
+});
+
+router.post('/delete', function *() {
+    var bodyReq = this.request.body;
+    var p = bodyReq.items[0];
+    this.body = yield FileManager.rename(path.join(Configs.data.root,p), path.join(Configs.data.root, Configs.data.trashPath, p));
 });
 
 module.exports = router.middleware();

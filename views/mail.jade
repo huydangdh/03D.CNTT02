@@ -16,20 +16,22 @@ html
         meta(property='og:image', content='')
 
         link(href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900', rel='stylesheet', type='text/css')
-        link(rel='stylesheet', href='bootstrap/bootstrap.v4.min.css')
+        link(rel='stylesheet', href='../bootstrap/bootstrap.v4.min.css')
 
         //
               *** THƯ VIỆN NGOÀI
               ____________________________________________________________
-
-        script(src="/tether.min.js")
-        script(src='bower_components/jquery/dist/jquery.min.js')
-        script(src='bootstrap/bootstrap.v4.min.js')
+        script(src="../jquery/jquery.min.js")
+        script(src="../tether.min.js")
+        script(src="../bootstrap/bootstrap.v4.min.js")
+        script(src="../moment.min.js")
+        script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js")
+        script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js")
 
         //
           *** END ***
 
-    body
+    body(ng-app="app" ng-cloak="true" ng-controller="mainController")
         //
             *** THANH TIÊU ĐỀ
             _______________________________________________________________
@@ -47,35 +49,11 @@ html
                         a.nav-link(href='#') Mã Nguồn
         //
                   *** END ***
-        //
-            *** JUMBOTRON
-            _______________________________________________________________
-        .jumbotron
-            .container
-                h3 (っ◔◡◔)っ ♥ 03D.CNTT02 ♥
-                p.lead ==============
-                p.lead ==============
-                a.btn.btn-primary(href="") Nhóm Facebook
-        //
-                  *** END ***
-        //
-            *** LIST APPS SECTION
-            _________________________________________________________________
         .container
-            .row(style="text-align: center;")
-                .col-lg-6
-                    .card.card-outline-primary.card
-                        img.card-img(src="/img/1474707001_Upload.png" alt="")
-                        .card-block
-                            h4.card-title Simple File
-                            p.card-text Ứng dụng upload và quản lý file đơn giản.
-                            a.btn.btn-primary(href="/drive") Mở Ứng Dụng
-                .col-lg-6
-                    .card.card.card-outline-primary.card
-                        img.card-img(src="/img/1474706977_Mail.png" alt="Simple Mail")
-                        .card-block
-                            h4.card-title Simple Mail
-                            p.card-text Ứng dụng đọc Gmail đơn giản.
-                            a.btn.btn-primary(href="/mail") Mở Ứng Dụng
-        //
-                  *** END ***
+            .list-group
+                p {{ title }}
+                div(ng-view)
+                script(type="text/ng-template" id="mail")
+                script(type="text/ng-template" id="detail")
+
+    script(src="/main/mail/app-mail.js")
