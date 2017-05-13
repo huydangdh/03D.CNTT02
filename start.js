@@ -16,8 +16,8 @@ global.Configs = {
   },
   logger: require('tracer').console({level: 'info'}),
   morganFormat: ':date[iso] :remote-addr :method :url :status :res[content-length] :response-time ms',
-  port : process.env.OPENSHIFT_NODEJS_PORT  || 8000,
-  ip:  process.env.OPENSHIFT_NODEJS_IP || "localhost"
+  port : process.env.OPENSHIFT_NODEJS_PORT  || process.env.PORT || 8000,
+  ip:  process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "localhost"
 };
 
 // Start Server
